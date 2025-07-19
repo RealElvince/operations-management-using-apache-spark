@@ -30,8 +30,7 @@ inputDF =(
     .format("csv")\
     .schema(input_schema)\
     .option("header", "true")\
-    .option("path", input_dir)\
-    .load()
+    .load(input_dir)
 )
 
 # transform data
