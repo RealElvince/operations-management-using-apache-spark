@@ -26,3 +26,15 @@ counts = words.groupBy("word").count()
 
 # Define the checkpoint directory
 checkpoint_dir = "./checkpoint"
+
+# start streaming define the necessary configuration
+streaing_query =(
+    counts.writeStream\
+    .outputMode("complete")\
+    .format("console")\
+    .option("checkpointLocation", checkpoint_dir)\
+    .start()
+)
+
+# wait for the termination of the query     
+streaing_query.awaitTermination()
