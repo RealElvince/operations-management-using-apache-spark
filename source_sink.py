@@ -36,3 +36,16 @@ inputDF =(
 
 # transform data
 outputDF = inputDF.select("id","name","friends").where(inputDF["age"] > 30)
+
+
+# streaming query
+streaming_query = (
+    outputDF.writeStream\
+    .outputMode("append")\
+    .format("csv")\
+    .option("checkpointLocation", checkpoint_dir)\
+    .option("path", output_dir)\
+    .start())
+
+# wait for the termination of the query
+streaming_query.awaitTermination()
