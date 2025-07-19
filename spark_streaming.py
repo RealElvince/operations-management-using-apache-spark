@@ -7,6 +7,8 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 
+# define input src
+
 lines = (
     spark.readStream\
     .format("socket")\
@@ -15,4 +17,12 @@ lines = (
     .load()\
     .cache()
 )
-             
+
+# transform data
+words = lines.select(split(col("value"), "\\s").alias("word"))\
+
+# Get the word count
+counts = words.groupBy("word").count()
+
+# Define the checkpoint directory
+checkpoint_dir = "./checkpoint"
