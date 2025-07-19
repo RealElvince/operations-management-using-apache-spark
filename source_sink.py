@@ -22,3 +22,17 @@ input_schema = StructType([
     StructField("age", IntegerType(), True),
     StructField("friends", IntegerType(), True)
     ])
+
+
+# input data src
+inputDF =(
+    spark.readStream\
+    .format("csv")\
+    .schema(input_schema)\
+    .option("header", "true")\
+    .option("path", input_dir)\
+    .load()
+)
+
+# transform data
+outputDF = inputDF.select("id","name","friends").where(inputDF["age"] > 30)
