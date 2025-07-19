@@ -29,7 +29,6 @@ inputDF =(
     spark.readStream\
     .format("csv")\
     .schema(input_schema)\
-    .option("header", "true")\
     .load(input_dir)
 )
 
