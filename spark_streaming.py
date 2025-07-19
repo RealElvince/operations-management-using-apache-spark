@@ -14,8 +14,7 @@ lines = (
     .format("socket")\
     .option("host", "localhost")\
     .option("port", 9999)
-    .load()\
-    .cache()
+    .load()
 )
 
 # transform data
